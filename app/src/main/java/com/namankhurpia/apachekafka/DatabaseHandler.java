@@ -13,120 +13,113 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "ClusterManager";
     private static final String TABLE_NAME = "clusterdetails";
-    private static final String SERVER_ID = "id";
-    private static final String CLUSTER_NAME = "name";
-    private static final String BOOTSTRAP_SERVER = "phone_number";
-    private static final String ZOOKEEPER_SERVER = "phone_number";
-    private static final String SERVER_COLOR = "phone_number";
+    private static final String SERVER_ID = "serverid";
+    private static final String CLUSTER_NAME = "clustername";
+    private static final String BOOTSTRAP_SERVER = "bootstrapserver";
+    private static final String ZOOKEEPER_SERVER = "zookeeperserver";
+    private static final String SERVER_COLOR = "servercolor";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        //3rd argument to be passed is CursorFactory instance
     }
 
-    // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_PH_NO + " TEXT" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        String CREATE_CLUSTER_TABLE = "CREATE TABLE " + TABLE_NAME + "("
+                + SERVER_ID + " INTEGER PRIMARY KEY,"
+                + CLUSTER_NAME + " TEXT,"
+                + BOOTSTRAP_SERVER + " TEXT,"
+                + ZOOKEEPER_SERVER + " TEXT,"
+                + SERVER_COLOR + "TEXT" + ")";
+        db.execSQL(CREATE_CLUSTER_TABLE);
     }
 
-    // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
-
-        // Create tables again
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
-    // code to add the new contact
-    void addContact(Cluster cluster) {
+
+    public void AddCluster(Cluster cluster) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName()); // Contact Name
-        values.put(KEY_PH_NO, contact.getPhoneNumber()); // Contact Phone
+        values.put(CLUSTER_NAME, cluster.getClusterName());
+        values.put(BOOTSTRAP_SERVER, cluster.getBootstrapServer());
+        values.put(ZOOKEEPER_SERVER, cluster.getZookeeperServer());
+        values.put(SERVER_COLOR, cluster.getColor());
 
-        // Inserting Row
-        db.insert(TABLE_CONTACTS, null, values);
-        //2nd argument is String containing nullColumnHack
-        db.close(); // Closing database connection
+        db.insert(TABLE_NAME, null, values);
+        db.close();
     }
 
-    // code to get the single contact
-    Contact getContact(int id) {
+
+    public Cluster getClusterById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[] { KEY_ID,
-                        KEY_NAME, KEY_PH_NO }, KEY_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, new String[] { CLUSTER_NAME, BOOTSTRAP_SERVER, ZOOKEEPER_SERVER, SERVER_COLOR }, SERVER_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        Contact contact = new Contact(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
-        // return contact
+        Cluster contact = new Cluster(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+
         return contact;
     }
 
-    // code to get all contacts in a list view
-    public List<Contact> getAllContacts() {
-        List<Contact> contactList = new ArrayList<Contact>();
+
+    public List<Cluster> getAllClusters() {
+        List<Cluster> clusterList = new ArrayList<Cluster>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Contact contact = new Contact();
-                contact.setID(Integer.parseInt(cursor.getString(0)));
-                contact.setName(cursor.getString(1));
-                contact.setPhoneNumber(cursor.getString(2));
-                // Adding contact to list
-                contactList.add(contact);
+                Cluster cluster = new Cluster();
+                cluster.setId(Integer.parseInt(cursor.getString(0)));
+                cluster.setClusterName(cursor.getString(1));
+                cluster.setBootstrapServer(cursor.getString(2));
+                cluster.setZookeeperServer(cursor.getString(3));
+                cluster.setColor(cursor.getString(4));
+
+                clusterList.add(cluster);
             } while (cursor.moveToNext());
         }
 
-        // return contact list
-        return contactList;
+        return clusterList;
     }
 
-    // code to update the single contact
-    public int updateContact(Contact contact) {
+
+    public int updateCluster (Cluster cluster) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName());
-        values.put(KEY_PH_NO, contact.getPhoneNumber());
+        values.put(CLUSTER_NAME, cluster.getClusterName());
+        values.put(BOOTSTRAP_SERVER, cluster.getBootstrapServer());
+        values.put(ZOOKEEPER_SERVER, cluster.getZookeeperServer());
+        values.put(SERVER_COLOR, cluster.getColor());
 
-        // updating row
-        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+        return db.update(TABLE_NAME, values, SERVER_ID + " = ?", new String[] { String.valueOf(cluster.getId()) });
     }
 
-    // Deleting single contact
-    public void deleteContact(Contact contact) {
+
+    public void deleteCluster(Cluster cluster) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+        db.delete(TABLE_NAME, SERVER_ID + " = ?",
+                new String[] { String.valueOf(cluster.getId()) });
         db.close();
     }
 
-    // Getting contacts Count
-    public int getContactsCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+    public int getClusterListSize() {
+        String countQuery = "SELECT  * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();
 
-        // return count
         return cursor.getCount();
     }
 
