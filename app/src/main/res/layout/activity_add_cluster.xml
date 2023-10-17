@@ -9,7 +9,7 @@ android:layout_width="match_parent"
 android:layout_weight="1"
 android:layout_height="match_parent"
 android:orientation="vertical"
-    tools:context=".AddCluster">
+    tools:context=".Activities.AddCluster">
 
 
 <FrameLayout
@@ -68,7 +68,104 @@ android:orientation="vertical"
     >
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_margin="20dp"
         android:layout_height="match_parent">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/clustername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconMode="password_toggle"
+            android:textColorHint="@color/black"
+            android:background="#EFEFEF"
+
+            android:hint="Enter Cluster Name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:background="#EFEFEF"
+                android:layout_marginLeft="10dp"
+                android:inputType="textPassword"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/bootstrapserver"
+            android:layout_marginTop="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconMode="password_toggle"
+            android:textColorHint="@color/black"
+            android:background="#EFEFEF"
+
+            android:hint="Enter Bootstrap Server URL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:background="#EFEFEF"
+                android:layout_marginLeft="10dp"
+                android:inputType="textUri"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/zookeeperserver"
+            android:layout_marginTop="140dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconMode="password_toggle"
+            android:textColorHint="@color/black"
+            android:background="#EFEFEF"
+
+            android:hint="Enter Zookeeper Server URL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:background="#EFEFEF"
+                android:layout_marginLeft="10dp"
+                android:inputType="textUri"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/containedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add this producer"
+            app:cornerRadius="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:backgroundTint="@color/black"
+            app:rippleColor="@color/black"
+android:layout_centerHorizontal="true"
+            android:layout_marginTop="300dp"
+            app:iconGravity="start"
+            app:iconTint="@android:color/white"
+            app:iconSize="24dp"
+            app:iconPadding="8dp"
+
+            app:strokeColor="@color/black"
+            app:strokeWidth="2dp"
+            />
 
 
 

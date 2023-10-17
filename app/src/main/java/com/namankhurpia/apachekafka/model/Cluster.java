@@ -1,4 +1,4 @@
-package com.namankhurpia.apachekafka;
+package com.namankhurpia.apachekafka.model;
 
 public class Cluster {
 
