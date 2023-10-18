@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:fontFamily="@font/roboto_thin"
+                android:fontFamily="@font/roboto"
                 android:text="Hello,"
                 android:layout_marginBottom="50dp"
                 android:textColor="@color/white"
@@ -37,6 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginBottom="30dp"
@@ -65,10 +66,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/roboto"
+                android:layout_marginBottom="20dp"
                 android:text="This app is intended to test Kafka Producers and Consumers, don’t worry, each consumer and producer details are saved locally on the go!"
-                android:textSize="14dp"
-                android:layout_margin="20dp"
-                />
+                android:textSize="14dp" />
 
 
             <com.google.android.material.button.MaterialButton
@@ -81,6 +85,7 @@
                 app:cornerRadius="4dp"
 
                 app:backgroundTint="@color/black"
+                android:fontFamily="@font/roboto"
                 app:rippleColor="@color/black"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="90dp"
@@ -100,6 +105,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:text="view consumers"
+                android:fontFamily="@font/roboto"
                 app:cornerRadius="4dp"
 
                 app:backgroundTint="@color/black"
@@ -113,6 +119,16 @@
 
                 app:strokeColor="@color/black"
                 app:strokeWidth="2dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Created by Naman Khurpia"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/roboto"
+                android:layout_centerHorizontal="true"
                 />
 
         </RelativeLayout>
